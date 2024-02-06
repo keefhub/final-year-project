@@ -86,7 +86,7 @@ const Register = ({ navigation }) => {
       <SafeAreaView>
         <View style={styles.container}>
           <View style={styles.resetContainer}>
-            <VStack space="md">
+            <VStack space="xs">
               <Box style={styles.input}>
                 <Input
                   size={"lg"}

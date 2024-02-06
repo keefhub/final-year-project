@@ -60,14 +60,9 @@ const Login = ({ navigation }) => {
         <View style={styles.container}>
           <Image source={images.Logo} style={styles.logo} />
           <View style={styles.textInputContainer}>
-            <VStack space="md">
+            <VStack space="xs">
               <Box style={styles.input}>
-                <Input
-                  size={"lg"}
-                  variant={"outline"}
-                  isInvalid={false}
-                  isDisabled={false}
-                >
+                <Input variant={"outline"} isInvalid={false} isDisabled={false}>
                   <InputField
                     placeholder="Email"
                     value={username}
@@ -78,12 +73,7 @@ const Login = ({ navigation }) => {
                 </Input>
               </Box>
               <Box style={styles.input}>
-                <Input
-                  size={"lg"}
-                  variant={"outline"}
-                  isInvalid={false}
-                  isDisabled={false}
-                >
+                <Input variant={"outline"} isInvalid={false} isDisabled={false}>
                   <InputField
                     placeholder="Password"
                     secureTextEntry={true}
@@ -99,7 +89,7 @@ const Login = ({ navigation }) => {
 
           <View style={styles.pressableContainer}>
             <ButtonGroup>
-              <VStack space="md">
+              <VStack space="xs">
                 <Button
                   onPress={onClickLogin}
                   size={"lg"}
@@ -110,16 +100,20 @@ const Login = ({ navigation }) => {
                 >
                   <ButtonText>{loading ? "Logging in..." : "Login"}</ButtonText>
                 </Button>
-                <Button
-                  onPress={onRegister}
-                  size={"lg"}
-                  variant={"outline"}
-                  isInvalid={false}
-                  isDisabled={false}
-                  style={styles.button}
-                >
-                  <ButtonText>Register</ButtonText>
-                </Button>
+
+                <Box style={(marginTop = 100)}>
+                  <Button
+                    onPress={onRegister}
+                    size={"lg"}
+                    variant={"outline"}
+                    isInvalid={false}
+                    isDisabled={false}
+                    style={styles.button}
+                  >
+                    <ButtonText>Register</ButtonText>
+                  </Button>
+                </Box>
+
                 <Button
                   onPress={onForgotPassword}
                   size={"lg"}

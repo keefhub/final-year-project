@@ -14,17 +14,17 @@ const AuthNavigator = () => {
       <Stack.Screen
         name="Login"
         component={Login}
-        options={{ title: "" }}
+        options={{ title: "", headerShown: false }}
       ></Stack.Screen>
       <Stack.Screen
         name="ForgotPassword"
         component={ForgotPassword}
-        options={{ title: "" }}
+        options={{ title: "", headerShown: false }}
       ></Stack.Screen>
       <Stack.Screen
         name="Register"
         component={Register}
-        options={{ title: "" }}
+        options={{ title: "", headerShown: false }}
       ></Stack.Screen>
       <Stack.Screen
         name="Home"

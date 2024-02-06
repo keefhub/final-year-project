@@ -4,6 +4,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#ffffe0",
     height: "100%",
+    paddingTop: 40,
   },
 
   resetContainer: {
@@ -12,7 +13,7 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    marginTop: 5,
+    marginTop: 2,
     width: 300,
   },
 
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
   pressableContainer: {
     display: "flex",
     alignItems: "center",
-    marginTop: 20,
+    marginTop: 10,
   },
 
   button: {
