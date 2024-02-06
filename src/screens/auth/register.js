@@ -13,6 +13,9 @@ import {
 } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
 
+import { FIREBASE_AUTH } from "../../../FirebaseConfig";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+
 const Register = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -51,12 +54,38 @@ const Register = ({ navigation }) => {
   };*/
 
   //frontend rendering condition, not yet gone to server side
-  const onClickRegister = () => {
+  /*const onClickRegister = () => {
     if (email === "" || username === "" || password === "") {
       alert("Please do not leave required fields empty");
     } else {
       alert("Registration successful!");
       navigation.navigate("Home");
+    }
+  };*/
+
+  const [loading, setLoading] = useState(false);
+  const auth = FIREBASE_AUTH;
+
+  //auth done locally, not yet done on server side
+  const onClickRegister = async () => {
+    setLoading(true);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      // Successfully signed up
+      const user = userCredential.user;
+      console.log(user);
+      setLoading(false);
+      navigation.navigate("Home");
+    } catch (error) {
+      // Handle authentication error
+      setLoading(false);
+      alert(
+        "Registration failed. Please check your credentials and try again."
+      );
     }
   };
 
@@ -71,13 +100,14 @@ const Register = ({ navigation }) => {
                   size={"lg"}
                   variant={"outline"}
                   isInvalid={false}
-                  isDisabled={false}
+                  isDisabled={loading}
                 >
                   <InputField
                     placeholder="Email"
                     value={email}
                     onChangeText={setEmail}
                     required
+                    autoCapitalize="none"
                   />
                 </Input>
                 <Box style={styles.input}>
@@ -85,13 +115,14 @@ const Register = ({ navigation }) => {
                     size={"lg"}
                     variant={"outline"}
                     isInvalid={false}
-                    isDisabled={false}
+                    isDisabled={loading}
                   >
                     <InputField
                       placeholder="Username"
                       value={username}
                       onChangeText={setUsername}
                       required
+                      autoCapitalize="none"
                     />
                   </Input>
                 </Box>
@@ -100,7 +131,7 @@ const Register = ({ navigation }) => {
                     size={"lg"}
                     variant={"outline"}
                     isInvalid={false}
-                    isDisabled={false}
+                    isDisabled={loading}
                   >
                     <InputField
                       placeholder="Password"
@@ -122,8 +153,11 @@ const Register = ({ navigation }) => {
                   size={"lg"}
                   variant={"solid"}
                   colorScheme={"primary"}
+                  isDisabled={loading}
                 >
-                  <ButtonText>Register</ButtonText>
+                  <ButtonText>
+                    {loading ? "Registering..." : "Register"}
+                  </ButtonText>
                 </Button>
                 <Button onPress={resetOnClick} size={"lg"} variant={"outline"}>
                   <ButtonText>Reset</ButtonText>

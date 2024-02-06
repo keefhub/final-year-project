@@ -10,10 +10,13 @@ import {
   Button,
   ButtonText,
   ButtonGroup,
+  set,
 } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
 
 import styles from "./styles";
+import { FIREBASE_AUTH } from "../../../FirebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const Login = ({ navigation }) => {
   onRegister = () => {
@@ -26,16 +29,29 @@ const Login = ({ navigation }) => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const auth = FIREBASE_AUTH;
+
   //auth done locally, not yet done on server side
-  onClickLogin = () => {
-    if (username === "" || password === "") {
+  const onClickLogin = async () => {
+    setLoading(true);
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        username,
+        password
+      );
+      // Successfully signed in
+      const user = userCredential.user;
+      console.log(user);
+      setLoading(false);
       navigation.navigate("Home");
-    } else {
-      if (username === null || password === null) {
-        alert("Please do not leave required fields empty");
-      } else {
-        alert("Please enter the correct credentials");
-      }
+    } catch (error) {
+      // Handle authentication error
+      setLoading(false);
+      alert(
+        "Authentication failed. Please check your credentials and try again."
+      );
     }
   };
 
@@ -54,10 +70,11 @@ const Login = ({ navigation }) => {
                   isDisabled={false}
                 >
                   <InputField
-                    placeholder="Username"
+                    placeholder="Email"
                     value={username}
                     onChangeText={setUsername}
                     required
+                    autoCapitalize="none"
                   />
                 </Input>
               </Box>
@@ -74,6 +91,7 @@ const Login = ({ navigation }) => {
                     value={password}
                     onChangeText={setPassword}
                     required
+                    autoCapitalize="none"
                   />
                 </Input>
               </Box>
@@ -88,10 +106,10 @@ const Login = ({ navigation }) => {
                   size={"lg"}
                   variant={"solid"}
                   isInvalid={false}
-                  isDisabled={false}
+                  isDisabled={loading} // Disable the button when loading is true
                   style={styles.button}
                 >
-                  <ButtonText>Login</ButtonText>
+                  <ButtonText>{loading ? "Logging in..." : "Login"}</ButtonText>
                 </Button>
                 <Button
                   onPress={onRegister}
