@@ -10,7 +10,6 @@ import {
   Button,
   ButtonText,
   ButtonGroup,
-  set,
 } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
 

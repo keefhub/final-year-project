@@ -54,14 +54,6 @@ const Register = ({ navigation }) => {
   };*/
 
   //frontend rendering condition, not yet gone to server side
-  /*const onClickRegister = () => {
-    if (email === "" || username === "" || password === "") {
-      alert("Please do not leave required fields empty");
-    } else {
-      alert("Registration successful!");
-      navigation.navigate("Home");
-    }
-  };*/
 
   const [loading, setLoading] = useState(false);
   const auth = FIREBASE_AUTH;

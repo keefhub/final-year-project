@@ -44,7 +44,7 @@ const Itinerary = () => {
   return (
     <GluestackUIProvider config={config}>
       <SafeAreaView>
-        <Box style={styles.formContainer}>
+        <Box style={styles.container}>
           <ScrollView>
             <FormControl>
               <Box style={styles.heading}>

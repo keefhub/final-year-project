@@ -64,7 +64,7 @@ const Expenses = () => {
     <GluestackUIProvider config={config}>
       <SafeAreaView>
         <Box style={styles.container}>
-          <ScrollView style={styles.container}>
+          <ScrollView>
             <Forex />
             {/* Map through expenses and render ExpenseCard for each item */}
             {expenses.map((expense, index) => (

@@ -4,6 +4,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
     height: "100%",
+    paddingTop: 40,
   },
 
   cardContainer: {
