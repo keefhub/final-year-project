@@ -1,9 +1,8 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import Home from "../screens/home/Home";
-import Expenses from "../screens/home/Expenses";
 import Itinerary from "../screens/home/Itinerary";
-import Location from "../screens/home/Location";
+import AddBlog from "../screens/home/AddBlog";
 import Profile from "../screens/home/Profile";
 import ExpenseNavigation from "./ExpenseNavigation";
 import { Ionicons } from "@expo/vector-icons";
@@ -25,8 +24,8 @@ const BottomNav = () => {
             iconName = focused ? "cash" : "cash-outline";
           } else if (route.name === "Itinerary") {
             iconName = focused ? "calendar" : "calendar-outline";
-          } else if (route.name === "Location") {
-            iconName = focused ? "location" : "location-outline";
+          } else if (route.name === "Add Blog") {
+            iconName = focused ? "add-circle" : "add-circle-outline";
           } else if (route.name === "Profile") {
             iconName = focused ? "person" : "person-outline";
           }
@@ -46,8 +45,8 @@ const BottomNav = () => {
         options={{ tabBarShowLabel: false }}
       />
       <Tab.Screen
-        name="Location"
-        component={Location}
+        name="Add Blog"
+        component={AddBlog}
         options={{ tabBarShowLabel: false }}
       />
       <Tab.Screen

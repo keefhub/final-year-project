@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { View } from "react-native";
+import { View, TextInput } from "react-native";
 import expenseStyles from "./expenseStyle";
-import { Textarea, TextareaInput, HStack, Text } from "@gluestack-ui/themed";
+import { HStack, Text } from "@gluestack-ui/themed";
 
 const Note = ({ onNoteSelect, initialNote }) => {
   const [note, setNote] = useState(initialNote || "");
@@ -18,17 +18,18 @@ const Note = ({ onNoteSelect, initialNote }) => {
           <Text style={expenseStyles.label}>Note:</Text>
         </View>
         <View style={expenseStyles.actionSheet}>
-          <Textarea size="sm">
-            <TextareaInput
-              placeholder="Note (optional)"
-              value={note}
-              maxLength={30}
-              onChangeText={(text) => {
-                setNote(text);
-                onNoteSelect(text);
-              }}
-            />
-          </Textarea>
+          <TextInput
+            style={{
+              height: 150,
+              borderColor: "#D3D3D3",
+              borderRadius: 5,
+              borderWidth: 1,
+              padding: 10,
+              textAlignVertical: "top",
+            }}
+            multiline
+            placeholder="Input Caption Here.."
+          />
         </View>
       </HStack>
     </View>

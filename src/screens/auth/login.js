@@ -31,8 +31,8 @@ const Login = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const auth = FIREBASE_AUTH;
 
-  //auth done locally, not yet done on server side
-  const onClickLogin = async () => {
+  //actual server-side login
+  /*const onClickLogin = async () => {
     setLoading(true);
     try {
       const userCredential = await signInWithEmailAndPassword(
@@ -51,6 +51,12 @@ const Login = ({ navigation }) => {
       alert(
         "Authentication failed. Please check your credentials and try again."
       );
+    }
+  };*/
+
+  const onClickLogin = () => {
+    if (username === "" && password === "") {
+      navigation.navigate("Home");
     }
   };
 

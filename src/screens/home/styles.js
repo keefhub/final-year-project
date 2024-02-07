@@ -110,6 +110,10 @@ const styles = StyleSheet.create({
     height: "100%",
   },
 
+  blogContainer: {
+    margin: 20,
+  },
+
   radioGroup: {
     marginTop: 15,
     marginBottom: 15,
