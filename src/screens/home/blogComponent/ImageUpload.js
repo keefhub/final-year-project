@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-
-//importing libraries
-import { Image } from "react-native";
+import { ScrollView, Image, Alert } from "react-native";
 import {
   Text,
   Button,
@@ -18,18 +16,17 @@ import {
 import { FontAwesome5, MaterialIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
-//importing styles
 import blogStyles from "./blogStyles";
 import images from "../../../constants/images";
 
-const ImageUpload = () => {
+const ImageUpload = ({ onImageSelect }) => {
   const [showModal, setShowModal] = useState(false);
-  const [image, setImage] = useState();
+  const [imagesArray, setImagesArray] = useState([]);
 
-  //need to save image to firestore
   const saveImage = async (image) => {
     try {
-      setImage(image);
+      setImagesArray([...imagesArray, image]);
+      onImageSelect([...imagesArray, image]);
       setShowModal(false);
     } catch (error) {
       throw error;
@@ -67,29 +64,59 @@ const ImageUpload = () => {
         await saveImage(result.assets[0].uri);
       }
     } catch (error) {
-      alert("Error uploading image:" + error.message);
+      Alert.alert("Error uploading image:" + error.message);
       setShowModal(false);
     }
   };
 
-  const removeImage = async () => {
+  const removeImage = async (index) => {
     try {
-      await saveImage(null);
+      const updatedImages = [...imagesArray];
+      updatedImages.splice(index, 1);
+      setImagesArray(updatedImages);
+      setShowModal(false);
     } catch (error) {
-      alert("Error removing image:" + error.message);
+      Alert.alert("Error removing image:" + error.message);
       setShowModal(false);
     }
   };
 
   return (
     <>
-      <Center>
-        <Image
-          source={image ? { uri: image } : images.Placeholder}
-          style={{ width: 200, height: 200 }}
-          alt="image not found"
-        />
-      </Center>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        {imagesArray.map((img, index) => (
+          <Pressable
+            key={index}
+            onPress={() => {
+              // Display a confirmation alert
+              Alert.alert(
+                "Confirm Delete",
+                "Are you sure you want to delete this image?",
+                [
+                  {
+                    text: "Cancel",
+                    style: "cancel",
+                  },
+                  {
+                    text: "OK",
+                    onPress: () => {
+                      // User confirmed, remove the image
+                      removeImage(index);
+                    },
+                  },
+                ],
+                { cancelable: false }
+              );
+            }}
+          >
+            <Image
+              source={img ? { uri: img } : images.Placeholder}
+              style={{ width: 200, height: 200, marginRight: 10 }}
+              alt={`image_${index}`}
+            />
+          </Pressable>
+        ))}
+      </ScrollView>
 
       <Button onPress={() => setShowModal(true)} variant="link">
         <ButtonText>Upload Image</ButtonText>
@@ -120,7 +147,9 @@ const ImageUpload = () => {
                   </Center>
                 </VStack>
                 <VStack space="xs">
-                  <Pressable onPress={() => removeImage()}>
+                  <Pressable
+                    onPress={() => removeImage(imagesArray.length - 1)}
+                  >
                     <MaterialIcons name="cancel" size={70} color="red" />
                   </Pressable>
                   <Center>
