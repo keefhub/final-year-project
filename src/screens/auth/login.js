@@ -32,7 +32,7 @@ const Login = ({ navigation }) => {
   const auth = FIREBASE_AUTH;
 
   //actual server-side login
-  /*const onClickLogin = async () => {
+  const onClickLogin = async () => {
     setLoading(true);
     try {
       const userCredential = await signInWithEmailAndPassword(
@@ -52,13 +52,13 @@ const Login = ({ navigation }) => {
         "Authentication failed. Please check your credentials and try again."
       );
     }
-  };*/
+  };
 
-  const onClickLogin = () => {
+  /*const onClickLogin = () => {
     if (username === "" && password === "") {
       navigation.navigate("Home");
     }
-  };
+  };*/
 
   return (
     <GluestackUIProvider config={config}>

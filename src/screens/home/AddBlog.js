@@ -19,7 +19,22 @@ import styles from "./styles";
 // Importing components
 import ImageUpload from "./blogComponent/ImageUpload";
 
+//firebase
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  FIRESTORE,
+  FIREBASE_AUTH,
+  FIREBASE_STORAGE,
+} from "../../../FirebaseConfig";
+import { addDoc, collection } from "firebase/firestore";
+
 const AddBlog = () => {
+  //initialize db
+  const storage = FIREBASE_STORAGE;
+  const auth = FIREBASE_AUTH;
+  const db = FIRESTORE;
+  const postCollection = collection(db, "posts");
+
   const [title, setTitle] = useState("");
   const [caption, setCaption] = useState("");
   const [selectedImages, setSelectedImages] = useState([]);
@@ -36,10 +51,51 @@ const AddBlog = () => {
     setSelectedImages(images);
   };
 
-  const uploadContent = () => {
-    console.log("Title:", title);
-    console.log("Caption:", caption);
-    console.log("Selected Images:", selectedImages);
+  const uploadImage = async (imageUri, imageName) => {
+    try {
+      const response = await fetch(imageUri);
+      const blob = await response.blob();
+      const storageRef = ref(storage, `images/${imageName}`); // Use ref with storage instance
+      await uploadBytes(storageRef, blob);
+      const url = await getDownloadURL(storageRef);
+      return url;
+    } catch (error) {
+      console.log("Error uploading image:", error);
+      throw error;
+    }
+  };
+
+  const handlePostButtonPress = async () => {
+    try {
+      const imageUrls = await Promise.all(
+        selectedImages.map(async (imageUri, index) => {
+          const imageName = `image_${index + 1}.jpg`;
+          return await uploadImage(imageUri, imageName);
+        })
+      );
+
+      await uploadContent(imageUrls);
+
+      console.log("Blog post created successfully");
+    } catch (error) {
+      console.error("Error creating blog post:", error);
+      // Add user-friendly error handling here (e.g., display an error message)
+    }
+  };
+
+  const uploadContent = async (imageUrls) => {
+    try {
+      await addDoc(postCollection, {
+        title,
+        caption,
+        image: imageUrls,
+        author: { name: auth.currentUser.email },
+        createdAt: new Date(),
+      });
+    } catch (error) {
+      console.error("Error uploading content:", error);
+      throw error;
+    }
   };
 
   return (
@@ -79,12 +135,8 @@ const AddBlog = () => {
                     }}
                   />
                   <ImageUpload onImageSelect={handleSelectedImage} />
-                  <Button
-                    onPress={() => {
-                      uploadContent();
-                    }}
-                  >
-                    <ButtonText>upload</ButtonText>
+                  <Button onPress={handlePostButtonPress}>
+                    <ButtonText>Post</ButtonText>
                     <AntDesign
                       name="upload"
                       size={20}
