@@ -11,13 +11,16 @@ import {
   Button,
   ButtonText,
   Box,
+  set,
 } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
 import { AntDesign } from "@expo/vector-icons";
 import styles from "./styles";
+import "react-native-get-random-values";
 
 // Importing components
 import ImageUpload from "./blogComponent/ImageUpload";
+import { v4 as uuidv4 } from "uuid";
 
 //firebase
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -28,7 +31,7 @@ import {
 } from "../../../FirebaseConfig";
 import { addDoc, collection } from "firebase/firestore";
 
-const AddBlog = () => {
+const AddBlog = ({ navigation }) => {
   //initialize db
   const storage = FIREBASE_STORAGE;
   const auth = FIREBASE_AUTH;
@@ -68,14 +71,17 @@ const AddBlog = () => {
   const handlePostButtonPress = async () => {
     try {
       const imageUrls = await Promise.all(
-        selectedImages.map(async (imageUri, index) => {
-          const imageName = `image_${index + 1}.jpg`;
+        selectedImages.map(async (imageUri) => {
+          const imageName = `image_${uuidv4()}`;
           return await uploadImage(imageUri, imageName);
         })
       );
 
       await uploadContent(imageUrls);
-
+      setTitle("");
+      setCaption("");
+      setSelectedImages([]);
+      navigation.navigate("Home");
       console.log("Blog post created successfully");
     } catch (error) {
       console.error("Error creating blog post:", error);

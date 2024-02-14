@@ -12,7 +12,7 @@ import styles from "./styles";
 import Tabs from "./profileComponent/tab";
 import AvatarComponent from "./profileComponent/avatar";
 
-import { signOut } from "firebase/auth";
+import { signOut, onAuthStateChanged } from "firebase/auth";
 import { FIREBASE_AUTH } from "../../../FirebaseConfig";
 
 const Profile = () => {

@@ -10,6 +10,7 @@ import {
   Button,
   ButtonText,
   ButtonGroup,
+  set,
 } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
 
@@ -35,16 +36,19 @@ const Login = ({ navigation }) => {
   const onClickLogin = async () => {
     setLoading(true);
     try {
+      // Sign in the user
       const userCredential = await signInWithEmailAndPassword(
         auth,
         username,
         password
       );
+
       // Successfully signed in
       const user = userCredential.user;
-      //console.log(user);
       setLoading(false);
       navigation.navigate("Home");
+      setUsername("");
+      setPassword("");
     } catch (error) {
       // Handle authentication error
       setLoading(false);
