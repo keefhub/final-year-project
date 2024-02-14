@@ -42,7 +42,7 @@ const Login = ({ navigation }) => {
       );
       // Successfully signed in
       const user = userCredential.user;
-      console.log(user);
+      //console.log(user);
       setLoading(false);
       navigation.navigate("Home");
     } catch (error) {
