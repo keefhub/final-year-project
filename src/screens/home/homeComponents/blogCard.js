@@ -1,30 +1,54 @@
 import React, { useEffect, useState } from "react";
-import { View, Image, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import styles from "../styles";
 import blogStyles from "../blogComponent/blogStyles";
 
+//gluestack-ui
+import {
+  Input,
+  InputField,
+  InputIcon,
+  InputSlot,
+  SearchIcon,
+} from "@gluestack-ui/themed";
+
 //firebase
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
 import { FIRESTORE } from "../../../../FirebaseConfig";
 
 const BlogCard = ({ navigation }) => {
   const db = FIRESTORE;
   const [postList, setPostList] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const postCollectionRef = collection(db, "posts");
 
   useEffect(() => {
     const getPost = async () => {
       try {
-        const data = await getDocs(postCollectionRef);
+        let q;
+
+        if (searchQuery) {
+          // Apply search filter if searchQuery is not empty
+          q = query(
+            postCollectionRef,
+            where("title", ">=", searchQuery),
+            where("title", "<=", searchQuery + "\uf8ff"),
+            orderBy("title")
+          );
+        } else {
+          // Fetch all posts if no search query
+          q = postCollectionRef;
+        }
+
+        const data = await getDocs(q);
         setPostList(data.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-        //console.log(data.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
       } catch (error) {
         console.error("Error getting posts:", error);
       }
     };
 
     getPost();
-  }, []);
+  }, [postCollectionRef, searchQuery]);
 
   const handlePress = (post) => {
     navigation.navigate("BlogComponent", { post });
@@ -32,6 +56,19 @@ const BlogCard = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.searchContainer}>
+        <Input style={styles.search}>
+          <InputSlot pl="$3">
+            <InputIcon as={SearchIcon} />
+          </InputSlot>
+          <InputField
+            type="text"
+            placeholder="Search your dream destination!"
+            value={searchQuery}
+            onChangeText={(text) => setSearchQuery(text)}
+          />
+        </Input>
+      </View>
       {postList.map(
         (post) =>
           (post.title ||
@@ -43,11 +80,6 @@ const BlogCard = ({ navigation }) => {
               style={blogStyles.card}
               onPress={() => handlePress(post)}
             >
-              {post.author && (
-                <Text style={blogStyles.preview}>
-                  By: {post.author.name || "Unknown Author"}
-                </Text>
-              )}
               {post.title && <Text style={blogStyles.title}>{post.title}</Text>}
               {post.caption && (
                 <Text style={blogStyles.preview}>

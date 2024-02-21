@@ -6,7 +6,7 @@ import Home from "../screens/home/Home";
 
 const Stack = createNativeStackNavigator();
 
-const ScreenNavigation = () => {
+const HomeNavigation = () => {
   return (
     <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
@@ -27,4 +27,4 @@ const ScreenNavigation = () => {
   );
 };
 
-export default ScreenNavigation;
+export default HomeNavigation;

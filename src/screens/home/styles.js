@@ -40,20 +40,17 @@ const styles = StyleSheet.create({
     backgroundColor: "#aec6cf",
   },
 
-  headerContainer: {
-    marginTop: 20,
-    marginLeft: 20,
-  },
-
   header: {
     fontWeight: "bold",
     fontSize: 20,
   },
 
   image: {
-    width: 175,
-    height: 100,
+    marginTop: 10,
+    width: "100%",
+    height: 300,
     borderRadius: 10,
+    aspectRatio: 1,
   },
 
   imageContainer: {

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, SafeAreaView, ScrollView, Text } from "react-native";
 import ContinentCard from "./homeComponents/continentCard";
-import SeasonalCard from "./homeComponents/seasonalCard";
-import BlogComponent from "./homeComponents/blogComponent";
 import BlogCard from "./homeComponents/blogCard";
 import { GluestackUIProvider } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
@@ -39,8 +37,6 @@ const Home = ({ navigation }) => {
               {currentUser ? `Welcome, ${currentUser.email}` : "Home"}
             </Text>
             <ContinentCard />
-            <SeasonalCard />
-
             <BlogCard navigation={navigation} />
           </ScrollView>
         </View>

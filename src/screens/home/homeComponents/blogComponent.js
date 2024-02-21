@@ -7,15 +7,6 @@ import styles from "../styles";
 import { collection, getDocs } from "firebase/firestore";
 import { FIRESTORE } from "../../../../FirebaseConfig";
 
-//styling
-import {
-  Input,
-  InputSlot,
-  InputIcon,
-  InputField,
-  SearchIcon,
-} from "@gluestack-ui/themed";
-
 const BlogComponent = () => {
   const db = FIRESTORE;
   const [postList, setPostList] = useState([]);
@@ -39,33 +30,32 @@ const BlogComponent = () => {
   const selectedPost = route.params?.post || null;
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <View style={styles.blogContainer}>
-        <View style={styles.headerContainer}>
-          <Text style={styles.header}>Blog</Text>
-        </View>
-        <View style={styles.searchContainer}>
-          {selectedPost && (
-            <View key={selectedPost.id}>
-              {selectedPost.author && (
-                <Text>@{selectedPost.author.name || "Unknown Author"}</Text>
-              )}
-              {selectedPost.title && <Text>{selectedPost.title}</Text>}
-              {selectedPost.caption && <Text>{selectedPost.caption}</Text>}
-              {selectedPost.image && selectedPost.image.length > 0 && (
-                <View>
-                  {selectedPost.image.map((imageUrl, index) => (
-                    <Image
-                      key={index}
-                      source={{ uri: imageUrl }}
-                      style={styles.image}
-                    />
-                  ))}
-                </View>
-              )}
-            </View>
-          )}
-        </View>
+        {selectedPost && (
+          <View key={selectedPost.id}>
+            {selectedPost.title && (
+              <Text style={styles.header}>{selectedPost.title}</Text>
+            )}
+            {selectedPost.caption && <Text>{selectedPost.caption}</Text>}
+            {selectedPost.image && selectedPost.image.length > 0 && (
+              <View>
+                {selectedPost.image.map((imageUrl, index) => (
+                  <Image
+                    key={index}
+                    source={{ uri: imageUrl }}
+                    style={styles.image}
+                  />
+                ))}
+              </View>
+            )}
+            {selectedPost.author && (
+              <Text>
+                Written By: {selectedPost.author.name || "Unknown Author"}
+              </Text>
+            )}
+          </View>
+        )}
       </View>
     </SafeAreaView>
   );
