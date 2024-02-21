@@ -3,6 +3,7 @@ import { View, SafeAreaView, ScrollView, Text } from "react-native";
 import ContinentCard from "./homeComponents/continentCard";
 import SeasonalCard from "./homeComponents/seasonalCard";
 import BlogComponent from "./homeComponents/blogComponent";
+import BlogCard from "./homeComponents/blogCard";
 import { GluestackUIProvider } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
 import styles from "./styles";
@@ -11,7 +12,7 @@ import styles from "./styles";
 import { FIREBASE_AUTH } from "../../../FirebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
 
-const Home = () => {
+const Home = ({ navigation }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const auth = FIREBASE_AUTH;
 
@@ -34,12 +35,13 @@ const Home = () => {
       <SafeAreaView>
         <View style={styles.container}>
           <ScrollView showsVerticalScrollIndicator={false}>
-            <Text>
+            <Text style={styles.title}>
               {currentUser ? `Welcome, ${currentUser.email}` : "Home"}
             </Text>
             <ContinentCard />
             <SeasonalCard />
-            <BlogComponent />
+
+            <BlogCard navigation={navigation} />
           </ScrollView>
         </View>
       </SafeAreaView>

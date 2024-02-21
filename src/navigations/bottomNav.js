@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
-import Home from "../screens/home/Home";
+import HomeNavigation from "./homeNavigation";
 import Itinerary from "../screens/home/Itinerary";
 import AddBlog from "../screens/home/AddBlog";
 import Profile from "../screens/home/Profile";
@@ -36,7 +36,7 @@ const BottomNav = () => {
     >
       <Tab.Screen
         name="Home Tab"
-        component={Home}
+        component={HomeNavigation}
         options={{ tabBarShowLabel: false }}
       />
       <Tab.Screen

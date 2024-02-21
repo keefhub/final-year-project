@@ -143,6 +143,12 @@ const styles = StyleSheet.create({
     marginTop: 5,
     width: "90%",
   },
+
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginLeft: 20,
+  },
 });
 
 export default styles;
