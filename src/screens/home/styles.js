@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
     height: "100%",
-    paddingTop: 40,
+    paddingTop: 45,
   },
 
   cardContainer: {
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   },
 
   search: {
-    width: 375,
+    width: 390,
   },
 
   searchContainer: {

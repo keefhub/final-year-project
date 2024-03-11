@@ -38,6 +38,7 @@ const Itinerary = () => {
       setDestination("");
       setDuration("");
       setActivities("");
+      console.log(values, destination, duration, activities);
       alert("Your itinerary has been created!");
     }
   };

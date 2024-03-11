@@ -34,9 +34,8 @@ const Home = ({ navigation }) => {
         <View style={styles.container}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <Text style={styles.title}>
-              {currentUser ? `Welcome, ${currentUser.email}` : "Home"}
+              {currentUser ? `Welcome! ${currentUser.email}` : "Home"}
             </Text>
-            <ContinentCard />
             <BlogCard navigation={navigation} />
           </ScrollView>
         </View>

@@ -1,6 +1,10 @@
 import { StyleSheet } from "react-native";
 
 const blogStyles = StyleSheet.create({
+  container: {
+    marginTop: 20,
+  },
+
   modalTitle: {
     marginBottom: 10,
     paddingTop: 10,
@@ -8,7 +12,7 @@ const blogStyles = StyleSheet.create({
 
   card: {
     padding: 16,
-    margin: 8,
+    margin: 10,
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 8,

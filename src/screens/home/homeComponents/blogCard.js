@@ -55,7 +55,7 @@ const BlogCard = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={blogStyles.container}>
       <View style={styles.searchContainer}>
         <Input style={styles.search}>
           <InputSlot pl="$3">
