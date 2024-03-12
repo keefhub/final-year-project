@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { SafeAreaView, ScrollView, View } from "react-native";
 import styles from "./styles";
 
 import { GluestackUIProvider } from "@gluestack-ui/themed";
@@ -24,21 +24,57 @@ import {
 
 import { FontAwesome } from "@expo/vector-icons";
 
+//openAI]
+import axios from "axios";
+import apiKey from "../../../OpenAIConfig";
+
 const Itinerary = () => {
   const [values, setValues] = useState("");
   const [destination, setDestination] = useState("");
   const [duration, setDuration] = useState("");
   const [activities, setActivities] = useState("");
 
+  const openaiEndpoint = "https://api.openai.com/v1/chat/completions";
+  const planItinerary = async () => {
+    try {
+      const response = await axios.post(openaiEndpoint, {
+        prompt: `I am travelling with,
+        ${values}.
+        I am going to
+        ${destination}
+        for
+        ${duration}.
+        And I want to include the following activities,
+        ${activities}`,
+        max_tokens: 150,
+        temperature: 0.7,
+        n: 1,
+      });
+      console.log(response.data.choices[0].text);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleSubmit = () => {
     if (values === "" || destination === "" || duration === "") {
       alert("Please do not leave required fields empty");
     } else {
+      //planItinerary();
       setValues("");
       setDestination("");
       setDuration("");
       setActivities("");
-      console.log(values, destination, duration, activities);
+      console.log(
+        `I am travelling with,
+        ${values}.
+        I am going to
+        ${destination}
+        for
+        ${duration}.
+        And I want to include the following activities,
+        ${activities}`
+      );
       alert("Your itinerary has been created!");
     }
   };
@@ -110,7 +146,7 @@ const Itinerary = () => {
                     isDisabled={false}
                   >
                     <InputField
-                      placeholder="i.e., 7d6n"
+                      placeholder="i.e., 5 days, 1 week, etc.."
                       value={duration}
                       onChangeText={setDuration}
                     />
