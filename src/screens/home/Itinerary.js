@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, ScrollView, View } from "react-native";
+import { SafeAreaView, ScrollView } from "react-native";
 import styles from "./styles";
 
 import { GluestackUIProvider } from "@gluestack-ui/themed";
@@ -24,33 +24,54 @@ import {
 
 import { FontAwesome } from "@expo/vector-icons";
 
-//openAI]
-import axios from "axios";
-import apiKey from "../../../OpenAIConfig";
+// OpenAI
+import OpenAI from "openai";
+import { OPENAI_API_KEY, OPENAI_BASE_URL } from "@env";
 
 const Itinerary = () => {
   const [values, setValues] = useState("");
   const [destination, setDestination] = useState("");
   const [duration, setDuration] = useState("");
   const [activities, setActivities] = useState("");
+  const [plan, setPlan] = useState("");
 
-  const openaiEndpoint = "https://api.openai.com/v1/chat/completions";
   const planItinerary = async () => {
     try {
-      const response = await axios.post(openaiEndpoint, {
-        prompt: `I am travelling with,
-        ${values}.
-        I am going to
-        ${destination}
-        for
-        ${duration}.
-        And I want to include the following activities,
-        ${activities}`,
-        max_tokens: 150,
-        temperature: 0.7,
-        n: 1,
+      const prompt = [
+        {
+          role: "user",
+          content: `Plan a comprehensive travel itinerary. 
+            I am travelling with,
+            ${values}.
+            I am going to
+            ${destination}
+            for
+            ${duration}.
+            And I want to include the following activities,
+            ${activities}`,
+        },
+      ];
+
+      const results = await fetch(OPENAI_BASE_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${OPENAI_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo",
+          messages: prompt,
+        }),
       });
-      console.log(response.data.choices[0].text);
+
+      //const responseData = await results.json();
+
+      console.log(results);
+
+      // Access specific fields from the response as needed
+      //console.log(responseData.choices[0]);
+
+      // setPlan(responseData);
     } catch (error) {
       console.error(error);
     }
@@ -60,24 +81,15 @@ const Itinerary = () => {
     if (values === "" || destination === "" || duration === "") {
       alert("Please do not leave required fields empty");
     } else {
-      //planItinerary();
+      planItinerary();
       setValues("");
       setDestination("");
       setDuration("");
       setActivities("");
-      console.log(
-        `I am travelling with,
-        ${values}.
-        I am going to
-        ${destination}
-        for
-        ${duration}.
-        And I want to include the following activities,
-        ${activities}`
-      );
       alert("Your itinerary has been created!");
     }
   };
+
   return (
     <GluestackUIProvider config={config}>
       <SafeAreaView>
