@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { TextInput } from "react-native";
+import { CommonActions } from "@react-navigation/native";
 import { SafeAreaView, ScrollView } from "react-native";
 import {
   GluestackUIProvider,
@@ -81,7 +82,7 @@ const AddBlog = ({ navigation }) => {
       setTitle("");
       setCaption("");
       setSelectedImages([]);
-      navigation.navigate("Home");
+      navigation.dispatch(CommonActions.navigate("Login"));
       console.log("Blog post created successfully");
     } catch (error) {
       console.error("Error creating blog post:", error);

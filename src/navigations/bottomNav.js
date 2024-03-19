@@ -1,9 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import HomeNavigation from "./homeNavigation";
+import ProfileNavigation from "./profileNavigation";
 import Itinerary from "../screens/home/Itinerary";
 import AddBlog from "../screens/home/AddBlog";
-import Profile from "../screens/home/Profile";
 import ExpenseNavigation from "./ExpenseNavigation";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -26,7 +26,7 @@ const BottomNav = () => {
             iconName = focused ? "calendar" : "calendar-outline";
           } else if (route.name === "Add Blog") {
             iconName = focused ? "add-circle" : "add-circle-outline";
-          } else if (route.name === "Profile") {
+          } else if (route.name === "Profile Tab") {
             iconName = focused ? "person" : "person-outline";
           }
 
@@ -55,8 +55,8 @@ const BottomNav = () => {
         options={{ tabBarShowLabel: false }}
       />
       <Tab.Screen
-        name="Profile"
-        component={Profile}
+        name="Profile Tab"
+        component={ProfileNavigation}
         options={{ tabBarShowLabel: false }}
       />
     </Tab.Navigator>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { View, SafeAreaView, ScrollView, Text } from "react-native";
-import ContinentCard from "./homeComponents/continentCard";
 import BlogCard from "./homeComponents/blogCard";
 import { GluestackUIProvider } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { ScrollView, SafeAreaView } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import {
   GluestackUIProvider,
   Box,
@@ -11,12 +10,12 @@ import { config } from "@gluestack-ui/config";
 import styles from "./styles";
 import Tabs from "./profileComponent/tab";
 import AvatarComponent from "./profileComponent/avatar";
+import TravelLog from "./profileComponent/travelLog";
 
-import { signOut, onAuthStateChanged } from "firebase/auth";
+import { signOut } from "firebase/auth";
 import { FIREBASE_AUTH } from "../../../FirebaseConfig";
 
-const Profile = () => {
-  const navigation = useNavigation();
+const Profile = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
 
   const handleSignOut = async () => {
@@ -41,7 +40,7 @@ const Profile = () => {
             contentContainerStyle={{ flexGrow: 1 }}
             style={{ paddingTop: 20 }}
           >
-            <Tabs />
+            <Tabs navigation={navigation} />
           </ScrollView>
 
           <Button

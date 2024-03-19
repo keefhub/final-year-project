@@ -22,9 +22,9 @@ const renderTabBar = (props) => (
   />
 );
 
-const TravelLogTab = () => (
+const TravelLogTab = ({ navigation }) => (
   <View style={{ flex: 1 }}>
-    <TravelLog />
+    <TravelLog navigation={navigation} />
   </View>
 );
 

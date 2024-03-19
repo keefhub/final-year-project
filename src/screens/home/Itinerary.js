@@ -36,6 +36,8 @@ const Itinerary = () => {
   const [plan, setPlan] = useState("");
 
   const planItinerary = async () => {
+    const openai = new OpenAI((baseURL = OPENAI_BASE_URL));
+    res = await openai.chat.completions.create({});
     try {
       const prompt = [
         {
