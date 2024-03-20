@@ -1,5 +1,6 @@
-import { ScrollView, View, Text, TouchableOpacity } from "react-native";
-
+import { ScrollView, Text, TouchableOpacity } from "react-native";
+import { HStack } from "@gluestack-ui/themed";
+import { FontAwesome6 } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import styles from "../styles";
 import blogStyles from "../blogComponent/blogStyles";
@@ -22,8 +23,8 @@ const TravelLog = ({ navigation }) => {
       // Query posts filtered by the logged-in user's UID
       let q = query(
         postCollectionRef,
-        where("author", "==", userUID), // Filter by user's UID
-        orderBy("title")
+        where("author.name", "==", userUID), // Filter by user's UID
+        orderBy("author.name")
       );
 
       const data = await getDocs(q);
@@ -49,18 +50,34 @@ const TravelLog = ({ navigation }) => {
             post.caption ||
             (post.author && post.author.name) ||
             (post.image && post.image.length > 0)) && (
-            <TouchableOpacity
-              key={post.id}
-              style={blogStyles.card}
-              onPress={() => handlePress(post)}
-            >
-              {post.title && <Text style={blogStyles.title}>{post.title}</Text>}
-              {post.caption && (
-                <Text style={blogStyles.preview}>
-                  {post.caption.substring(0, 50) + "..."}
-                </Text>
-              )}
-            </TouchableOpacity>
+            <>
+              <HStack style={blogStyles.card}>
+                <View style={styles.touchableBlogComponent}>
+                  <TouchableOpacity
+                    key={post.id}
+                    onPress={() => handlePress(post)}
+                  >
+                    {post.title && (
+                      <Text style={blogStyles.title}>{post.title}</Text>
+                    )}
+                    {post.caption && (
+                      <Text style={blogStyles.preview}>
+                        {post.caption.substring(0, 50) + "..."}
+                      </Text>
+                    )}
+                  </TouchableOpacity>
+                </View>
+                <View styles={blogStyles.ellipsis}>
+                  <TouchableOpacity>
+                    <FontAwesome6
+                      name="ellipsis-vertical"
+                      size={24}
+                      color="black"
+                    />
+                  </TouchableOpacity>
+                </View>
+              </HStack>
+            </>
           )
       )}
     </ScrollView>

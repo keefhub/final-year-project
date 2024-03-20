@@ -48,18 +48,15 @@ const styles = StyleSheet.create({
   image: {
     marginTop: 10,
     width: "100%",
-    height: 300,
-    borderRadius: 10,
+    height: 375,
+    borderRadius: 5,
     aspectRatio: 1,
   },
 
   imageContainer: {
     display: "flex",
-    flexDirection: "row",
     alignItems: "center",
-    paddingLeft: 20,
-    paddingTop: 10,
-    gap: 20,
+    justifyContent: "center",
   },
 
   imageText: {

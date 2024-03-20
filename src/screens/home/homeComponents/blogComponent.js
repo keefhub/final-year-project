@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, SafeAreaView, Text, Image } from "react-native";
+import { ScrollView, View, SafeAreaView, Text, Image } from "react-native";
 import { useRoute } from "@react-navigation/native"; // Import useRoute hook
 import styles from "../styles";
 
@@ -31,7 +31,7 @@ const BlogComponent = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.blogContainer}>
+      <ScrollView style={styles.blogContainer}>
         {selectedPost && (
           <View key={selectedPost.id}>
             {selectedPost.title && (
@@ -39,7 +39,7 @@ const BlogComponent = () => {
             )}
             {selectedPost.caption && <Text>{selectedPost.caption}</Text>}
             {selectedPost.image && selectedPost.image.length > 0 && (
-              <View>
+              <View style={styles.imageContainer}>
                 {selectedPost.image.map((imageUrl, index) => (
                   <Image
                     key={index}
@@ -56,7 +56,7 @@ const BlogComponent = () => {
             )}
           </View>
         )}
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

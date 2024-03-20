@@ -7,6 +7,7 @@ import {
   ButtonText,
 } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
+
 import styles from "./styles";
 import Tabs from "./profileComponent/tab";
 import AvatarComponent from "./profileComponent/avatar";
@@ -40,7 +41,7 @@ const Profile = ({ navigation }) => {
             contentContainerStyle={{ flexGrow: 1 }}
             style={{ paddingTop: 20 }}
           >
-            <Tabs navigation={navigation} />
+            <TravelLog navigation={navigation} />
           </ScrollView>
 
           <Button

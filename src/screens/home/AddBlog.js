@@ -82,7 +82,7 @@ const AddBlog = ({ navigation }) => {
       setTitle("");
       setCaption("");
       setSelectedImages([]);
-      navigation.dispatch(CommonActions.navigate("Login"));
+      navigation.dispatch(CommonActions.navigate("Home"));
       console.log("Blog post created successfully");
     } catch (error) {
       console.error("Error creating blog post:", error);
