@@ -82,7 +82,14 @@ const AddBlog = ({ navigation }) => {
       setTitle("");
       setCaption("");
       setSelectedImages([]);
-      navigation.dispatch(CommonActions.navigate("Home"));
+      //reset navigation to home screen
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: "Home" }],
+        })
+      );
+
       console.log("Blog post created successfully");
     } catch (error) {
       console.error("Error creating blog post:", error);

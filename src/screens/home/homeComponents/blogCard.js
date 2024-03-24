@@ -10,6 +10,7 @@ import {
   InputIcon,
   InputSlot,
   SearchIcon,
+  VStack,
 } from "@gluestack-ui/themed";
 
 //firebase
