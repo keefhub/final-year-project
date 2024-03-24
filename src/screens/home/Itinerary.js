@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, ScrollView } from "react-native";
+import { SafeAreaView, ScrollView, Text } from "react-native";
 import styles from "./styles";
 
 import { GluestackUIProvider } from "@gluestack-ui/themed";
@@ -10,7 +10,6 @@ import {
   RadioIndicator,
   RadioIcon,
   CircleIcon,
-  RadioLabel,
   Box,
   FormControl,
   Heading,
@@ -22,7 +21,12 @@ import {
   VStack,
 } from "@gluestack-ui/themed";
 
-import { FontAwesome } from "@expo/vector-icons";
+import {
+  FontAwesome,
+  MaterialIcons,
+  FontAwesome5,
+  Ionicons,
+} from "@expo/vector-icons";
 
 // OpenAI
 import OpenAI from "openai";
@@ -33,10 +37,12 @@ const Itinerary = () => {
   const [destination, setDestination] = useState("");
   const [duration, setDuration] = useState("");
   const [activities, setActivities] = useState("");
-  const [plan, setPlan] = useState("");
 
   const planItinerary = async () => {
-    const openai = new OpenAI((baseURL = OPENAI_BASE_URL));
+    const openai = new OpenAI({
+      apiKey: OPENAI_API_KEY,
+      baseURL: OPENAI_BASE_URL,
+    });
     res = await openai.chat.completions.create({});
     try {
       const prompt = [
@@ -108,25 +114,49 @@ const Itinerary = () => {
                       <RadioIndicator>
                         <RadioIcon as={CircleIcon} />
                       </RadioIndicator>
-                      <RadioLabel>Family</RadioLabel>
+                      <MaterialIcons
+                        name="family-restroom"
+                        size={20}
+                        color="black"
+                        style={styles.itineraryIcon}
+                      />
+                      <Text style={styles.itineraryText}>Family</Text>
                     </Radio>
                     <Radio value="friends">
                       <RadioIndicator>
                         <RadioIcon as={CircleIcon} />
                       </RadioIndicator>
-                      <RadioLabel>Friends</RadioLabel>
+                      <FontAwesome5
+                        name="user-friends"
+                        size={15}
+                        color="black"
+                        style={styles.itineraryIcon}
+                      />
+                      <Text style={styles.itineraryText}>Friends</Text>
                     </Radio>
                     <Radio value="partner">
                       <RadioIndicator>
                         <RadioIcon as={CircleIcon} />
                       </RadioIndicator>
-                      <RadioLabel>Partner</RadioLabel>
+                      <FontAwesome
+                        name="heart"
+                        size={15}
+                        color="black"
+                        style={styles.itineraryIcon}
+                      />
+                      <Text style={styles.itineraryText}>Partner</Text>
                     </Radio>
                     <Radio value="alone">
                       <RadioIndicator>
                         <RadioIcon as={CircleIcon} />
                       </RadioIndicator>
-                      <RadioLabel>Alone</RadioLabel>
+                      <Ionicons
+                        name="person"
+                        size={17}
+                        color="black"
+                        style={styles.itineraryIcon}
+                      />
+                      <Text style={styles.itineraryText}>Alone</Text>
                     </Radio>
                   </VStack>
                 </RadioGroup>

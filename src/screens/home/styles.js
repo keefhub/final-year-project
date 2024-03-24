@@ -143,6 +143,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginLeft: 20,
   },
+
+  itineraryText: {
+    fontSize: 15,
+    fontWeight: "bold",
+    marginLeft: 5,
+  },
+
+  itineraryIcon: {
+    marginLeft: 5,
+  },
 });
 
 export default styles;

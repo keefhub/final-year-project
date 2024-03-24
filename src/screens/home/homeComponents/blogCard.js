@@ -11,6 +11,7 @@ import {
   InputSlot,
   SearchIcon,
   VStack,
+  HStack,
 } from "@gluestack-ui/themed";
 
 //firebase
@@ -70,26 +71,34 @@ const BlogCard = ({ navigation }) => {
           />
         </Input>
       </View>
-      {postList.map(
-        (post) =>
-          (post.title ||
-            post.caption ||
-            (post.author && post.author.name) ||
-            (post.image && post.image.length > 0)) && (
-            <TouchableOpacity
-              key={post.id}
-              style={blogStyles.card}
-              onPress={() => handlePress(post)}
-            >
-              {post.title && <Text style={blogStyles.title}>{post.title}</Text>}
-              {post.caption && (
-                <Text style={blogStyles.preview}>
-                  {post.caption.substring(0, 50) + "..."}
-                </Text>
-              )}
-            </TouchableOpacity>
-          )
-      )}
+      <VStack style={blogStyles.homeCard}>
+        {postList.map(
+          (post) =>
+            (post.title ||
+              post.caption ||
+              (post.author && post.author.name) ||
+              (post.image && post.image.length > 0)) && (
+              <TouchableOpacity
+                key={post.id}
+                onPress={() => handlePress(post)}
+                style={blogStyles.cardContainer}
+              >
+                <View>
+                  <View style={blogStyles.textContainer}>
+                    {post.title && (
+                      <Text style={blogStyles.title}>{post.title}</Text>
+                    )}
+                    {post.caption && (
+                      <Text style={blogStyles.preview}>
+                        {post.caption.substring(0, 50) + "..."}
+                      </Text>
+                    )}
+                  </View>
+                </View>
+              </TouchableOpacity>
+            )
+        )}
+      </VStack>
     </View>
   );
 };

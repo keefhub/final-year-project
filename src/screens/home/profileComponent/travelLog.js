@@ -34,6 +34,7 @@ const TravelLog = ({ navigation }) => {
   const db = FIRESTORE;
   const auth = FIREBASE_AUTH;
   const [postList, setPostList] = useState([]);
+  const [selectedPostId, setSelectedPostId] = useState(null);
   const postCollectionRef = collection(db, "posts");
 
   const [showModal, setShowModal] = useState(false);
@@ -65,6 +66,7 @@ const TravelLog = ({ navigation }) => {
     try {
       await deleteDoc(doc(postCollectionRef, postId));
       setShowModal(false);
+      setSelectedPostId(null);
       console.log("Post deleted successfully");
       // Update postList to reflect the deletion
       setPostList(postList.filter((post) => post.id !== postId));
@@ -77,7 +79,6 @@ const TravelLog = ({ navigation }) => {
     navigation.navigate("BlogComponent", { post });
   };
 
-  //onPress={() => handleDelete(post.id)} this is the delete button
   return (
     <ScrollView style={blogStyles.container}>
       {postList.length === 0 ? (
@@ -108,54 +109,51 @@ const TravelLog = ({ navigation }) => {
                   </TouchableOpacity>
                 </View>
                 <TouchableOpacity
-                  onPress={() => setShowModal(true)}
-                  ref={{ ref: post.id }}
+                  onPress={() => setSelectedPostId(post.id)}
                   style={blogStyles.ellipsis}
                 >
                   <Ionicons name="ellipsis-vertical" size={24} color="black" />
                 </TouchableOpacity>
-                <Modal
-                  isOpen={showModal}
-                  onClose={() => {
-                    setShowModal(false);
-                  }}
-                  finalFocusRef={post.id}
-                >
-                  <ModalBackdrop />
-                  <ModalContent>
-                    <ModalHeader>
-                      <Heading>Warning!</Heading>
-                      <ModalCloseButton onPress={() => setShowModal(false)}>
-                        <AntDesign name="close" size={24} color="black" />
-                      </ModalCloseButton>
-                    </ModalHeader>
-                    <ModalBody>
-                      <Text>
-                        Are you absolutely certain you wish to delete your
-                        wonderful experience? This action cannot be undone.
-                      </Text>
-                    </ModalBody>
-                    <Center>
-                      <ModalFooter>
-                        <Button
-                          action="negative"
-                          onPress={() => handleDelete(post.id)}
+                {selectedPostId && (
+                  <Modal isOpen={true} onClose={() => setSelectedPostId(null)}>
+                    <ModalBackdrop />
+                    <ModalContent>
+                      <ModalHeader>
+                        <Heading>Warning!</Heading>
+                        <ModalCloseButton
+                          onPress={() => setSelectedPostId(null)}
                         >
-                          <ButtonIcon>
-                            <Ionicons
-                              name="trash-bin"
-                              size={17}
-                              color="white"
-                            />
-                          </ButtonIcon>
-                          <ButtonText style={{ marginLeft: 5 }}>
-                            Confirm
-                          </ButtonText>
-                        </Button>
-                      </ModalFooter>
-                    </Center>
-                  </ModalContent>
-                </Modal>
+                          <AntDesign name="close" size={24} color="black" />
+                        </ModalCloseButton>
+                      </ModalHeader>
+                      <ModalBody>
+                        <Text>
+                          Are you absolutely certain you wish to delete your
+                          wonderful experience? This action cannot be undone.
+                        </Text>
+                      </ModalBody>
+                      <Center>
+                        <ModalFooter>
+                          <Button
+                            action="negative"
+                            onPress={() => handleDelete(selectedPostId)}
+                          >
+                            <ButtonIcon>
+                              <Ionicons
+                                name="trash-bin"
+                                size={17}
+                                color="white"
+                              />
+                            </ButtonIcon>
+                            <ButtonText style={{ marginLeft: 5 }}>
+                              Confirm
+                            </ButtonText>
+                          </Button>
+                        </ModalFooter>
+                      </Center>
+                    </ModalContent>
+                  </Modal>
+                )}
               </View>
             )
         )

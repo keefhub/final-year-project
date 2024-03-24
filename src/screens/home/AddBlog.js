@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextInput } from "react-native";
+import { TextInput, Text } from "react-native";
 import { CommonActions } from "@react-navigation/native";
 import { SafeAreaView, ScrollView } from "react-native";
 import {
@@ -42,6 +42,7 @@ const AddBlog = ({ navigation }) => {
   const [title, setTitle] = useState("");
   const [caption, setCaption] = useState("");
   const [selectedImages, setSelectedImages] = useState([]);
+  const [posting, setPosting] = useState(false);
 
   const titleInput = (text) => {
     setTitle(text);
@@ -70,6 +71,7 @@ const AddBlog = ({ navigation }) => {
   };
 
   const handlePostButtonPress = async () => {
+    setPosting(true);
     try {
       const imageUrls = await Promise.all(
         selectedImages.map(async (imageUri) => {
@@ -82,6 +84,7 @@ const AddBlog = ({ navigation }) => {
       setTitle("");
       setCaption("");
       setSelectedImages([]);
+      setPosting(false);
       //reset navigation to home screen
       navigation.dispatch(
         CommonActions.reset({
@@ -128,10 +131,13 @@ const AddBlog = ({ navigation }) => {
                       placeholder="Title"
                       value={title}
                       onChangeText={(text) => {
-                        titleInput(text);
+                        if (text.length <= 25) {
+                          titleInput(text);
+                        }
                       }}
                     />
                   </Input>
+                  <Text style={{ textAlign: "right" }}>{title.length}/25</Text>
                   <TextInput
                     style={{
                       height: 150,
@@ -145,12 +151,17 @@ const AddBlog = ({ navigation }) => {
                     placeholder="Input Caption Here.."
                     value={caption}
                     onChangeText={(text) => {
-                      captionInput(text);
+                      if (text.length <= 200) {
+                        captionInput(text);
+                      }
                     }}
                   />
+                  <Text style={{ textAlign: "right" }}>
+                    {caption.length}/200
+                  </Text>
                   <ImageUpload onImageSelect={handleSelectedImage} />
                   <Button onPress={handlePostButtonPress}>
-                    <ButtonText>Post</ButtonText>
+                    <ButtonText>{posting ? "Posting..." : "Post"}</ButtonText>
                     <AntDesign
                       name="upload"
                       size={20}
