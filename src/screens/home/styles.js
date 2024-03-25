@@ -53,12 +53,6 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
   },
 
-  imageContainer: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
   imageText: {
     textAlign: "center",
     fontSize: 15,

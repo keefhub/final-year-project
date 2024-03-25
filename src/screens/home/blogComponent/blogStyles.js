@@ -40,7 +40,7 @@ const blogStyles = StyleSheet.create({
     borderColor: "#ccc",
     borderRadius: 3,
     width: "45%",
-    height: 250,
+    height: 175,
   },
 
   title: {
