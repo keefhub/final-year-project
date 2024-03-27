@@ -19,6 +19,7 @@ import { FIREBASE_AUTH } from "../../../FirebaseConfig";
 
 const ForgotPassword = ({ navigation }) => {
   const [email, setEmail] = useState("");
+  const [confirmEmail, setConfirmEmail] = useState("");
   const auth = FIREBASE_AUTH;
 
   const navigateLogin = () => {
@@ -26,9 +27,14 @@ const ForgotPassword = ({ navigation }) => {
   };
 
   const handleForgotPassword = async () => {
+    if (email !== confirmEmail) {
+      alert("Emails do not match!");
+      return;
+    }
     try {
       await sendPasswordResetEmail(auth, email);
       alert("Password reset email sent!");
+      navigation.navigate("Login");
     } catch (error) {
       console.error(error);
     }
@@ -42,6 +48,7 @@ const ForgotPassword = ({ navigation }) => {
             <InputField
               type="text"
               placeholder="Enter your Email.."
+              onChangeText={setEmail}
               autoCapitalize="none"
             />
           </Input>
@@ -52,14 +59,14 @@ const ForgotPassword = ({ navigation }) => {
               type="text"
               placeholder="Confirm Email.."
               autoCapitalize="none"
-              onChangeText={setEmail}
+              onChangeText={setConfirmEmail}
             />
           </Input>
         </Box>
         <Box style={styles.pressableContainer}>
           <ButtonGroup>
             <VStack space="xs">
-              <Button size={"lg"}>
+              <Button size={"lg"} onPress={handleForgotPassword}>
                 <ButtonText>Reset Password</ButtonText>
               </Button>
               <Button onPress={navigateLogin} variant={"link"} size={"lg"}>

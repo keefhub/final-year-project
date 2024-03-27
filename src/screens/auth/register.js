@@ -13,11 +13,13 @@ import {
 } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
 
-import { FIREBASE_AUTH } from "../../../FirebaseConfig";
+import { FIREBASE_AUTH, FIRESTORE } from "../../../FirebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { addDoc, collection } from "firebase/firestore";
 
 const Register = ({ navigation }) => {
   const [email, setEmail] = useState("");
+  const [confirmEmail, setConfirmEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -25,6 +27,7 @@ const Register = ({ navigation }) => {
 
   const resetOnClick = () => {
     setEmail("");
+    setConfirmEmail("");
     setUsername("");
     setPassword("");
   };
@@ -43,6 +46,14 @@ const Register = ({ navigation }) => {
     }
   };
 
+  const checkEmailMatch = () => {
+    if (email !== confirmEmail) {
+      alert("Email and Confirm Email must match!");
+      return false;
+    }
+    return true;
+  };
+
   /*const passwordValidator = ({ password }) => {
     regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
     if (!regex.test(password)) {
@@ -57,9 +68,15 @@ const Register = ({ navigation }) => {
 
   const [loading, setLoading] = useState(false);
   const auth = FIREBASE_AUTH;
+  const db = FIRESTORE;
+  const postCollection = collection(db, "users");
 
   //auth done locally, not yet done on server side
   const onClickRegister = async () => {
+    if (!checkEmailMatch()) {
+      setLoading(false);
+      return;
+    }
     setLoading(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -69,11 +86,23 @@ const Register = ({ navigation }) => {
       );
       // Successfully signed up
       const user = userCredential.user;
-      console.log(user);
+
+      // Save the username to Firestore
+      await addDoc(postCollection, {
+        uid: user.uid,
+        email: email,
+        username: username,
+      });
+
       setLoading(false);
       navigation.navigate("Home");
+      setEmail("");
+      setConfirmEmail("");
+      setUsername("");
+      setPassword("");
     } catch (error) {
       // Handle authentication error
+      console.log(error);
       setLoading(false);
       alert(
         "Registration failed. Please check your credentials and try again."
@@ -88,12 +117,7 @@ const Register = ({ navigation }) => {
           <View style={styles.resetContainer}>
             <VStack space="xs">
               <Box style={styles.input}>
-                <Input
-                  size={"lg"}
-                  variant={"outline"}
-                  isInvalid={false}
-                  isDisabled={loading}
-                >
+                <Input size={"lg"} variant={"outline"} isInvalid={false}>
                   <InputField
                     placeholder="Email"
                     value={email}
@@ -102,38 +126,44 @@ const Register = ({ navigation }) => {
                     autoCapitalize="none"
                   />
                 </Input>
-                <Box style={styles.input}>
-                  <Input
-                    size={"lg"}
-                    variant={"outline"}
-                    isInvalid={false}
-                    isDisabled={loading}
-                  >
-                    <InputField
-                      placeholder="Username"
-                      value={username}
-                      onChangeText={setUsername}
-                      required
-                      autoCapitalize="none"
-                    />
-                  </Input>
-                </Box>
-                <Box style={styles.input}>
-                  <Input
-                    size={"lg"}
-                    variant={"outline"}
-                    isInvalid={false}
-                    isDisabled={loading}
-                  >
-                    <InputField
-                      placeholder="Password"
-                      secureTextEntry={true}
-                      value={password}
-                      onChangeText={setPassword}
-                      required
-                    />
-                  </Input>
-                </Box>
+              </Box>
+              <Box style={styles.input}>
+                <Input size={"lg"} variant={"outline"} isInvalid={false}>
+                  <InputField
+                    placeholder="Confirm Email"
+                    value={confirmEmail}
+                    onChangeText={setConfirmEmail}
+                    required
+                    autoCapitalize="none"
+                  />
+                </Input>
+              </Box>
+              <Box style={styles.input}>
+                <Input size={"lg"} variant={"outline"} isInvalid={false}>
+                  <InputField
+                    placeholder="Username"
+                    value={username}
+                    onChangeText={setUsername}
+                    required
+                    autoCapitalize="none"
+                  />
+                </Input>
+              </Box>
+              <Box style={styles.input}>
+                <Input
+                  size={"lg"}
+                  variant={"outline"}
+                  isInvalid={false}
+                  isDisabled={loading}
+                >
+                  <InputField
+                    placeholder="Password"
+                    secureTextEntry={true}
+                    value={password}
+                    onChangeText={setPassword}
+                    required
+                  />
+                </Input>
               </Box>
             </VStack>
           </View>

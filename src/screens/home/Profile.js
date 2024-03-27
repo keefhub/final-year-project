@@ -12,7 +12,7 @@ const Profile = ({ navigation }) => {
     <GluestackUIProvider config={config}>
       <SafeAreaView style={{ flex: 1 }}>
         <Box style={{ flex: 1, ...styles.container }}>
-          <AvatarComponent />
+          <AvatarComponent navigation={navigation} />
           <View
             style={{
               borderBottomWidth: 1,

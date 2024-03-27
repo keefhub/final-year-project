@@ -16,7 +16,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { FIREBASE_AUTH } from "../../../../FirebaseConfig";
 
-const AvatarComponent = () => {
+const AvatarComponent = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const auth = FIREBASE_AUTH;
