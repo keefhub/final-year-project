@@ -38,5 +38,6 @@ yarn-error.*
 FirebaseConfig.js
 metro.config.js
 .env
+OpenAIConfig.js
 
 

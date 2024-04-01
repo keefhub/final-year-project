@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "fyp",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

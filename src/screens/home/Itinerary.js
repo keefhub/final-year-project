@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, ScrollView, Text } from "react-native";
+import { SafeAreaView, ScrollView, Text, View } from "react-native";
 import styles from "./styles";
 
 import { GluestackUIProvider } from "@gluestack-ui/themed";
@@ -28,58 +28,47 @@ import {
   Ionicons,
 } from "@expo/vector-icons";
 
-// OpenAI
-import OpenAI from "openai";
-import { OPENAI_API_KEY, OPENAI_BASE_URL } from "@env";
-
 const Itinerary = () => {
   const [values, setValues] = useState("");
   const [destination, setDestination] = useState("");
   const [duration, setDuration] = useState("");
   const [activities, setActivities] = useState("");
+  const [itineraryResult, setItineraryResult] = useState(null);
 
   const planItinerary = async () => {
-    const openai = new OpenAI({
-      apiKey: OPENAI_API_KEY,
-      baseURL: OPENAI_BASE_URL,
-    });
-    res = await openai.chat.completions.create({});
     try {
-      const prompt = [
+      const results = await fetch(
+        "https://api.openai.com/v1/chat/completions",
         {
-          role: "user",
-          content: `Plan a comprehensive travel itinerary. 
-            I am travelling with,
-            ${values}.
-            I am going to
-            ${destination}
-            for
-            ${duration}.
-            And I want to include the following activities,
-            ${activities}`,
-        },
-      ];
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer {YOUR_API_KEY}",
+          },
+          body: JSON.stringify({
+            model: "gpt-3.5-turbo",
+            messages: [
+              {
+                role: "user",
+                content: `Plan a comprehensive travel itinerary. 
+                  I am travelling with,
+                  ${values}.
+                  I am going to
+                  ${destination}
+                  for
+                  ${duration}.
+                  And I want to include the following activities,
+                  ${activities}`,
+              },
+            ],
+          }),
+        }
+      );
 
-      const results = await fetch(OPENAI_BASE_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${OPENAI_API_KEY}`,
-        },
-        body: JSON.stringify({
-          model: "gpt-3.5-turbo",
-          messages: prompt,
-        }),
-      });
-
-      //const responseData = await results.json();
-
-      console.log(results);
-
-      // Access specific fields from the response as needed
-      //console.log(responseData.choices[0]);
-
-      // setPlan(responseData);
+      const responseData = await results.json();
+      console.log("OpenAI Response:", responseData); // Log the response
+      const resultText = responseData.choices[0].message.content;
+      setItineraryResult(resultText);
     } catch (error) {
       console.error(error);
     }
@@ -230,6 +219,12 @@ const Itinerary = () => {
                 </Box>
               </VStack>
             </FormControl>
+            {itineraryResult !== "" && (
+              <View style={styles.resultContainer}>
+                <Text style={styles.resultHeading}>Itinerary Result:</Text>
+                <Text style={styles.resultText}>{itineraryResult}</Text>
+              </View>
+            )}
           </ScrollView>
         </Box>
       </SafeAreaView>
