@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { SafeAreaView, ScrollView, Text, View } from "react-native";
+import { SafeAreaView, ScrollView, Text, View, TextInput } from "react-native";
 import styles from "./styles";
 
-import { GluestackUIProvider } from "@gluestack-ui/themed";
+import { GluestackUIProvider, HStack, set } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
 import {
   RadioGroup,
@@ -19,6 +19,7 @@ import {
   ButtonText,
   ButtonIcon,
   VStack,
+  Spinner,
 } from "@gluestack-ui/themed";
 
 import {
@@ -34,8 +35,10 @@ const Itinerary = () => {
   const [duration, setDuration] = useState("");
   const [activities, setActivities] = useState("");
   const [itineraryResult, setItineraryResult] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const planItinerary = async () => {
+    setLoading(true);
     try {
       const results = await fetch(
         "https://api.openai.com/v1/chat/completions",
@@ -43,7 +46,8 @@ const Itinerary = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer {YOUR_API_KEY}",
+            Authorization:
+              "Bearer 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",
           },
           body: JSON.stringify({
             model: "gpt-3.5-turbo",
@@ -71,11 +75,15 @@ const Itinerary = () => {
       setItineraryResult(resultText);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
+      alert("Your itinerary has been created!");
     }
   };
 
   const handleSubmit = () => {
     if (values === "" || destination === "" || duration === "") {
+      setLoading(false);
       alert("Please do not leave required fields empty");
     } else {
       planItinerary();
@@ -83,7 +91,6 @@ const Itinerary = () => {
       setDestination("");
       setDuration("");
       setActivities("");
-      alert("Your itinerary has been created!");
     }
   };
 
@@ -219,10 +226,26 @@ const Itinerary = () => {
                 </Box>
               </VStack>
             </FormControl>
-            {itineraryResult !== "" && (
-              <View style={styles.resultContainer}>
-                <Text style={styles.resultHeading}>Itinerary Result:</Text>
-                <Text style={styles.resultText}>{itineraryResult}</Text>
+            {loading && <Spinner size="large" />}
+
+            <Heading style={styles.resultHeading}>Itinerary Result</Heading>
+            {itineraryResult ? (
+              <View style={styles.resultTextContainer}>
+                <TextInput multiline={true} style={styles.resultText}>
+                  {itineraryResult}
+                </TextInput>
+              </View>
+            ) : (
+              <View style={styles.noResultTextContainer}>
+                <FontAwesome5
+                  style={styles.noResultIcon}
+                  name="plane-departure"
+                  size={40}
+                  color="black"
+                />
+                <Text style={styles.noResultText}>
+                  You have yet to plan anything
+                </Text>
               </View>
             )}
           </ScrollView>

@@ -5,7 +5,28 @@ meta {
 }
 
 post {
-  url: 
-  body: none
-  auth: none
+  url: https://api.openai.com/v1/chat/completions
+  body: json
+  auth: bearer
+}
+
+headers {
+  Content-Type: application/json
+}
+
+auth:bearer {
+  token: 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
+}
+
+body:json {
+  {
+    "model": "gpt-3.5-turbo",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Plan a comprehensive travel itinerary. I am traveling with my family to johor for 8 days. I want to include the following activities, shopping."
+      }
+    ]
+  }
+  
 }

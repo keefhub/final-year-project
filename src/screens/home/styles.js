@@ -26,20 +26,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 5, height: 5 },
   },
 
-  cardAfrica: {
-    backgroundColor: "#4a4948",
-  },
-
-  cardAsia: {
-    backgroundColor: "#fdfd96",
-  },
-  cardAmerica: {
-    backgroundColor: "#ff6961",
-  },
-  cardEurope: {
-    backgroundColor: "#aec6cf",
-  },
-
   header: {
     fontWeight: "bold",
     fontSize: 20,
@@ -146,6 +132,45 @@ const styles = StyleSheet.create({
 
   itineraryIcon: {
     marginLeft: 5,
+  },
+
+  resultHeading: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+    textAlign: "center",
+    marginTop: 40,
+    marginLeft: 20,
+    marginRight: 20,
+  },
+
+  resultText: {
+    fontSize: 15,
+  },
+
+  resultTextContainer: {
+    borderWidth: 1,
+    borderRadius: 2,
+    padding: 5,
+    margin: 20,
+    borderColor: "#ccc",
+    minHeight: 200,
+  },
+
+  noResultText: {
+    minHeight: 80,
+    fontSize: 15,
+    fontWeight: "bold",
+    marginTop: 10,
+  },
+
+  noResultTextContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  noResultIcon: {
+    paddingTop: 20,
   },
 });
 
