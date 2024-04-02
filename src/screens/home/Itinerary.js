@@ -46,8 +46,7 @@ const Itinerary = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization:
-              "Bearer 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",
+            Authorization: "Bearer {YOUR_API_TOKEN}",
           },
           body: JSON.stringify({
             model: "gpt-3.5-turbo",
