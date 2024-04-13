@@ -38,6 +38,7 @@ yarn-error.*
 FirebaseConfig.js
 metro.config.js
 .env
+fyp/
 
 
 

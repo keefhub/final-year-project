@@ -29,6 +29,10 @@ import {
   Ionicons,
 } from "@expo/vector-icons";
 
+//convert pdf
+import { printToFileAsync } from "expo-print";
+import { shareAsync } from "expo-sharing";
+
 const Itinerary = () => {
   const [values, setValues] = useState("");
   const [destination, setDestination] = useState("");
@@ -46,7 +50,7 @@ const Itinerary = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer {YOUR_API_TOKEN}",
+            Authorization: "Bearer  {YOUR_API_KEY}",
           },
           body: JSON.stringify({
             model: "gpt-3.5-turbo",
@@ -91,6 +95,19 @@ const Itinerary = () => {
       setDuration("");
       setActivities("");
     }
+  };
+
+  let generatePDF = async () => {
+    const html = `<html>
+    <body>
+    <p> ${itineraryResult} </p>
+    </body>`;
+
+    const file = await printToFileAsync({
+      html: html,
+      base64: false,
+    });
+    await shareAsync(file.uri);
   };
 
   return (
@@ -230,9 +247,23 @@ const Itinerary = () => {
             <Heading style={styles.resultHeading}>Itinerary Result</Heading>
             {itineraryResult ? (
               <View style={styles.resultTextContainer}>
-                <TextInput multiline={true} style={styles.resultText}>
+                <TextInput
+                  multiline={true}
+                  style={styles.resultText}
+                  onChangeText={(text) => setItineraryResult(text)}
+                >
                   {itineraryResult}
                 </TextInput>
+                <Button
+                  size={"lg"}
+                  variant={"solid"}
+                  isInvalid={false}
+                  isDisabled={false}
+                  style={styles.button}
+                  onPress={generatePDF}
+                >
+                  <ButtonText style={styles.buttonText}>Save as PDF</ButtonText>
+                </Button>
               </View>
             ) : (
               <View style={styles.noResultTextContainer}>

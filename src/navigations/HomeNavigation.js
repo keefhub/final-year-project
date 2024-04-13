@@ -12,14 +12,16 @@ const HomeNavigation = () => {
       <Stack.Screen
         name="Home"
         component={Home}
-        options={{ title: "", headerShown: false }}
+        options={{
+          title: "",
+          headerShown: false,
+        }}
       />
       <Stack.Screen
         name="BlogComponent"
         component={BlogComponent}
         options={{
           title: "",
-          headerShown: false,
           animation: "slide_from_right",
         }}
       />

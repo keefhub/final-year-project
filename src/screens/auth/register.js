@@ -22,7 +22,7 @@ const Register = ({ navigation }) => {
   const [confirmEmail, setConfirmEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState("");
+  //const [emailError, setEmailError] = useState("");
   //const [passwordError, setPasswordError] = useState("");
 
   const resetOnClick = () => {
@@ -36,7 +36,7 @@ const Register = ({ navigation }) => {
     navigation.navigate("Login");
   };
 
-  const emailValidator = ({ email }) => {
+  /*const emailValidator = ({ email }) => {
     regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/;
     if (!regex.test(email)) {
       setEmailError("error email");
@@ -46,15 +46,7 @@ const Register = ({ navigation }) => {
     }
   };
 
-  const checkEmailMatch = () => {
-    if (email !== confirmEmail) {
-      alert("Email and Confirm Email must match!");
-      return false;
-    }
-    return true;
-  };
-
-  /*const passwordValidator = ({ password }) => {
+    const passwordValidator = ({ password }) => {
     regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
     if (!regex.test(password)) {
       setPasswordError("error password");
@@ -64,7 +56,13 @@ const Register = ({ navigation }) => {
     }
   };*/
 
-  //frontend rendering condition, not yet gone to server side
+  const checkEmailMatch = () => {
+    if (email !== confirmEmail) {
+      alert("Email and Confirm Email must match!");
+      return false;
+    }
+    return true;
+  };
 
   const [loading, setLoading] = useState(false);
   const auth = FIREBASE_AUTH;
