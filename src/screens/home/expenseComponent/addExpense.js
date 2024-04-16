@@ -80,7 +80,7 @@ const AddExpense = ({ navigation }) => {
 
   return (
     <GluestackUIProvider config={config}>
-      <View style={styles.container}>
+      <View style={styles.containerHeader}>
         <ScrollView>
           <View style={expenseStyles.inputFieldContainer}>
             <CalendarInput onDateSelect={handleSelectedDate} />

@@ -1,7 +1,8 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 
-import { View, Button } from "react-native";
+import { Button, TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 import BlogComponent from "../screens/home/homeComponents/blogComponent";
 import Profile from "../screens/home/Profile";
@@ -18,10 +19,12 @@ const ProfileNavigation = () => {
         options={({ navigation }) => ({
           headerRight: () => {
             return (
-              <Button
+              <TouchableOpacity
                 title="Settings"
                 onPress={() => navigation.navigate("Settings")}
-              />
+              >
+                <Ionicons name="settings-outline" size={24} color="black" />
+              </TouchableOpacity>
             );
           },
         })}

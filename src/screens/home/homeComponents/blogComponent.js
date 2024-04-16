@@ -52,7 +52,7 @@ const BlogComponent = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.containerHeader}>
       <ScrollView style={styles.blogContainer}>
         {selectedPost && (
           <View key={selectedPost.id}>

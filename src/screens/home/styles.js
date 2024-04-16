@@ -7,6 +7,11 @@ const styles = StyleSheet.create({
     paddingTop: 45,
   },
 
+  containerHeader: {
+    backgroundColor: "#fff",
+    height: "100%",
+  },
+
   cardContainer: {
     padding: 8,
   },
@@ -77,6 +82,7 @@ const styles = StyleSheet.create({
   searchContainer: {
     display: "flex",
     alignItems: "center",
+    padding: 10,
   },
 
   formContainer: {
@@ -122,6 +128,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginLeft: 20,
+    paddingTop: 10,
   },
 
   itineraryText: {

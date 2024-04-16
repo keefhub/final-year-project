@@ -62,7 +62,6 @@ const AvatarComponent = ({ navigation }) => {
 
   const handleSignOut = async () => {
     setLoading(true);
-    const auth = FIREBASE_AUTH;
     try {
       await signOut(auth);
       navigation.navigate("Login");
@@ -84,15 +83,6 @@ const AvatarComponent = ({ navigation }) => {
             <Heading size="sm">
               {currentUser ? `${username || currentUser.email}` : "Home"}
             </Heading>
-            <Button
-              size="xs"
-              variant="link"
-              action="primary"
-              onPress={handleSignOut}
-              disabled={loading}
-            >
-              <ButtonText>{loading ? "Signing Out..." : "Sign Out"}</ButtonText>
-            </Button>
           </HStack>
           <Text size="sm">Traveller</Text>
         </VStack>

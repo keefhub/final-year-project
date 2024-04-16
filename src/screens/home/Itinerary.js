@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { SafeAreaView, ScrollView, Text, View, TextInput } from "react-native";
 import styles from "./styles";
 
-import { GluestackUIProvider, HStack, set } from "@gluestack-ui/themed";
+import { GluestackUIProvider } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
 import {
   RadioGroup,
@@ -38,7 +38,7 @@ const Itinerary = () => {
   const [destination, setDestination] = useState("");
   const [duration, setDuration] = useState("");
   const [activities, setActivities] = useState("");
-  const [itineraryResult, setItineraryResult] = useState(null);
+  const [itineraryResult, setItineraryResult] = useState("");
   const [loading, setLoading] = useState(false);
 
   const planItinerary = async () => {
@@ -50,7 +50,7 @@ const Itinerary = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer  {YOUR_API_KEY}",
+            Authorization: "Bearer {API_KEY}",
           },
           body: JSON.stringify({
             model: "gpt-3.5-turbo",
@@ -246,24 +246,32 @@ const Itinerary = () => {
 
             <Heading style={styles.resultHeading}>Itinerary Result</Heading>
             {itineraryResult ? (
-              <View style={styles.resultTextContainer}>
-                <TextInput
-                  multiline={true}
-                  style={styles.resultText}
-                  onChangeText={(text) => setItineraryResult(text)}
-                >
-                  {itineraryResult}
-                </TextInput>
-                <Button
-                  size={"lg"}
-                  variant={"solid"}
-                  isInvalid={false}
-                  isDisabled={false}
-                  style={styles.button}
-                  onPress={generatePDF}
-                >
-                  <ButtonText style={styles.buttonText}>Save as PDF</ButtonText>
-                </Button>
+              <View>
+                <View style={styles.resultTextContainer}>
+                  <TextInput
+                    multiline={true}
+                    style={styles.resultText}
+                    onChangeText={(text) => setItineraryResult(text)}
+                  >
+                    {itineraryResult}
+                  </TextInput>
+                </View>
+                <View style={{ alignItems: "center", paddingBottom: 10 }}>
+                  <Button
+                    size={"lg"}
+                    action="negative"
+                    variant={"link"}
+                    isInvalid={false}
+                    isDisabled={false}
+                    style={styles.button}
+                    onPress={generatePDF}
+                  >
+                    <ButtonText style={styles.buttonText}>
+                      Save as PDF
+                    </ButtonText>
+                    <ButtonIcon as={FontAwesome} name="file-pdf-o" />
+                  </Button>
+                </View>
               </View>
             ) : (
               <View style={styles.noResultTextContainer}>

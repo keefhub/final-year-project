@@ -1,5 +1,8 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
+import { TouchableOpacity } from "react-native";
+
+import { Ionicons } from "@expo/vector-icons";
 
 import BlogComponent from "../screens/home/homeComponents/blogComponent";
 import Home from "../screens/home/Home";
@@ -13,8 +16,7 @@ const HomeNavigation = () => {
         name="Home"
         component={Home}
         options={{
-          title: "",
-          headerShown: false,
+          title: "Plan de Vogue",
         }}
       />
       <Stack.Screen

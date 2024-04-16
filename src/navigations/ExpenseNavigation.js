@@ -20,7 +20,6 @@ const ScreenNavigation = () => {
         component={AddExpense}
         options={{
           title: "",
-          headerShown: false,
           animation: "slide_from_right",
         }}
       />

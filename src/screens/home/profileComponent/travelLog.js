@@ -42,12 +42,11 @@ const TravelLog = ({ navigation }) => {
   const getPost = async () => {
     try {
       const user = auth.currentUser;
-      const userUID = user ? user.email : null;
 
       // Query posts filtered by the logged-in user's UID
       let q = query(
         postCollectionRef,
-        where("author.name", "==", userUID), // Filter by user's UID
+        where("author.name", "==", user.email), // Filter by user's UID
         orderBy("author.name")
       );
 

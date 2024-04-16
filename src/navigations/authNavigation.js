@@ -4,7 +4,6 @@ import Login from "../screens/auth/login";
 import ForgotPassword from "../screens/auth/forgotPassword";
 import Register from "../screens/auth/register";
 import BottomNav from "./bottomNav";
-import CustomsHeader from "./customHeader";
 
 const Stack = createNativeStackNavigator();
 

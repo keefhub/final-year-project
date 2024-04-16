@@ -55,7 +55,7 @@ const Home = ({ navigation }) => {
   return (
     <GluestackUIProvider config={config}>
       <SafeAreaView>
-        <View style={styles.container}>
+        <View style={styles.containerHeader}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <Text style={styles.title}>
               {currentUser
