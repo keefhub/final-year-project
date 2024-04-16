@@ -50,7 +50,7 @@ const Itinerary = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer {API_KEY}",
+            Authorization: "Bearer {YOUR_API}",
           },
           body: JSON.stringify({
             model: "gpt-3.5-turbo",
@@ -113,7 +113,7 @@ const Itinerary = () => {
   return (
     <GluestackUIProvider config={config}>
       <SafeAreaView>
-        <Box style={styles.container}>
+        <Box style={styles.containerHeader}>
           <ScrollView>
             <FormControl>
               <Box style={styles.heading}>

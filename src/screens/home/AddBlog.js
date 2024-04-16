@@ -32,7 +32,7 @@ import {
 } from "../../../FirebaseConfig";
 import { addDoc, collection } from "firebase/firestore";
 
-const AddBlog = ({ navigation }) => {
+const AddBlog = ({ navigation, clearFields }) => {
   //initialize db
   const storage = FIREBASE_STORAGE;
   const auth = FIREBASE_AUTH;
@@ -118,11 +118,11 @@ const AddBlog = ({ navigation }) => {
   return (
     <GluestackUIProvider config={config}>
       <SafeAreaView>
-        <Box style={styles.container}>
+        <Box style={styles.containerHeader}>
           <ScrollView>
             <FormControl>
               <Box style={styles.heading}>
-                <Heading size="lg">Add Blog</Heading>
+                <Heading size="lg">Add your wonderful stories!</Heading>
               </Box>
               <Box style={styles.blogContainer}>
                 <VStack space="xs">

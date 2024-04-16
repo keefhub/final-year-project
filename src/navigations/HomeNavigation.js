@@ -1,10 +1,11 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, Alert } from "react-native";
 
-import { Ionicons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 import BlogComponent from "../screens/home/homeComponents/blogComponent";
+import AddBlog from "../screens/home/AddBlog";
 import Home from "../screens/home/Home";
 
 const Stack = createNativeStackNavigator();
@@ -15,9 +16,21 @@ const HomeNavigation = () => {
       <Stack.Screen
         name="Home"
         component={Home}
-        options={{
+        options={({ navigation }) => ({
           title: "Plan de Vogue",
-        }}
+          headerRight: () => {
+            return (
+              <TouchableOpacity
+                style={{ marginRight: 10 }}
+                onPress={() => {
+                  navigation.navigate("Add Blog");
+                }}
+              >
+                <AntDesign name="plus" size={24} color="black" />
+              </TouchableOpacity>
+            );
+          },
+        })}
       />
       <Stack.Screen
         name="BlogComponent"
@@ -27,6 +40,7 @@ const HomeNavigation = () => {
           animation: "slide_from_right",
         }}
       />
+      <Stack.Screen component={AddBlog} name="Add Blog" />
     </Stack.Navigator>
   );
 };
